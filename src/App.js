@@ -1,4 +1,6 @@
+import CategoryForm from "./Component/CategoryForm";
 import NavBar from "./Component/NavBar";
+import ProductForm from "./Component/ProductForm";
 
 const products = [
   {
@@ -44,8 +46,14 @@ const categories = [
 
 function App() {
   return (
-    <div className="App">
-      <NavBar />
+    <div>
+      <div className="bg-slate-800 min-h-screen">
+        <NavBar />
+        <div className="container max-w-screen-sm mx-auto p-4">
+          <CategoryForm />
+          {/* <ProductForm /> */}
+        </div>
+      </div>
     </div>
   );
 }
