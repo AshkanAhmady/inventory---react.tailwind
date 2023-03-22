@@ -59,7 +59,7 @@ function App() {
         <div className="container max-w-screen-sm mx-auto p-4">
           <CategoryForm setCategories={setCategories} />
           <ProductForm setProducts={setProducts} categories={categories} />
-          <ProductList products={products} />
+          <ProductList products={products} setProducts={setProducts} />
         </div>
       </div>
     </div>
