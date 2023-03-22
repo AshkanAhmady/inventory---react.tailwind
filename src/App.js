@@ -2,6 +2,7 @@ import { useState } from "react";
 import CategoryForm from "./Component/CategoryForm";
 import NavBar from "./Component/NavBar";
 import ProductForm from "./Component/ProductForm";
+import ProductList from "./Component/ProductList";
 
 // const products = [
 //   {
@@ -58,6 +59,7 @@ function App() {
         <div className="container max-w-screen-sm mx-auto p-4">
           <CategoryForm setCategories={setCategories} />
           <ProductForm setProducts={setProducts} categories={categories} />
+          <ProductList products={products} />
         </div>
       </div>
     </div>
