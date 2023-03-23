@@ -77,6 +77,24 @@ function App() {
     return array.filter((p) => p.title.toLowerCase().includes(searchValue));
   };
 
+  // save data in localStorage
+  useEffect(() => {
+    let savedProducts = JSON.parse(localStorage.getItem("products")) || [];
+    let savedCategories = JSON.parse(localStorage.getItem("categories")) || [];
+    setProducts(savedProducts);
+    setCategories(savedCategories);
+  }, []);
+
+  useEffect(() => {
+    categories.length &&
+      localStorage.setItem("categories", JSON.stringify(categories));
+  }, [categories]);
+
+  useEffect(() => {
+    products.length &&
+      localStorage.setItem("products", JSON.stringify(products));
+  }, [products]);
+
   return (
     <div>
       <div className="bg-slate-800 min-h-screen">
