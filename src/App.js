@@ -53,14 +53,16 @@ function App() {
   const [filteredProducts, setFilteredProducts] = useState();
   const [sort, setSort] = useState("latest");
   const [searchValue, setSearchValue] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
 
   // this coding help us to control all of the filters (EASIEST)
   useEffect(() => {
     let result = products;
     result = filterSearchTitle(result);
+    result = filterCategory(result)
     result = dateSort(result);
     setFilteredProducts(result);
-  }, [products, sort, searchValue]);
+  }, [products, sort, searchValue, selectedCategory]);
 
   const dateSort = (array) => {
     let sortedProducts = [...array];
@@ -76,6 +78,10 @@ function App() {
   const filterSearchTitle = (array) => {
     return array.filter((p) => p.title.toLowerCase().includes(searchValue));
   };
+  
+  const filterCategory = (array) => {
+    return array.filter((p) => p.category.includes(selectedCategory));
+  }
 
   // save data in localStorage
   useEffect(() => {
@@ -98,7 +104,7 @@ function App() {
   return (
     <div>
       <div className="bg-slate-800 min-h-screen">
-        <NavBar />
+        <NavBar products={products} />
         <div className="container max-w-screen-sm mx-auto p-4">
           <CategoryForm setCategories={setCategories} />
           <ProductForm setProducts={setProducts} categories={categories} />
@@ -109,6 +115,9 @@ function App() {
                 setSearchValue={setSearchValue}
                 sort={sort}
                 setSort={setSort}
+                selectedCategory={selectedCategory}
+                setSelectedCategory={setSelectedCategory}
+                categories={categories}
               />
               <ProductList
                 products={filteredProducts}
