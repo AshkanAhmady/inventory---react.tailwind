@@ -4,54 +4,13 @@ import Filter from "./Component/Filter";
 import NavBar from "./Component/NavBar";
 import ProductForm from "./Component/ProductForm";
 import ProductList from "./Component/ProductList";
-
-// const products = [
-//   {
-//     id: 1,
-//     title: "html",
-//     category: "frontend",
-//     createdAt: "2021-11-03",
-//   },
-//   {
-//     id: 2,
-//     title: "css",
-//     category: "frontend",
-//     createdAt: "2021-10-01",
-//   },
-//   {
-//     id: 3,
-//     title: "php",
-//     category: "backend",
-//     createdAt: "2022-01-01",
-//   },
-//   {
-//     id: 4,
-//     title: "node.js",
-//     category: "backend",
-//     createdAt: "2022-04-03",
-//   },
-// ];
-
-// const categories = [
-//   {
-//     id: 1,
-//     title: "frontend",
-//     description: "frontEnd applications",
-//     createdAt: "2021-03-02",
-//   },
-//   {
-//     id: 1,
-//     title: "backend",
-//     description: "backEnd applications",
-//     createdAt: "2022-08-03",
-//   },
-// ];
+import { CategoriesType, ProductsType } from "./types";
 
 function App() {
-  const [categories, setCategories] = useState([]);
-  const [products, setProducts] = useState([]);
-  const [filteredProducts, setFilteredProducts] = useState();
-  const [sort, setSort] = useState("latest");
+  const [categories, setCategories] = useState<CategoriesType>([]);
+  const [products, setProducts] = useState<ProductsType>([]);
+  const [filteredProducts, setFilteredProducts] = useState<ProductsType>([]);
+  const [sort, setSort] = useState<string>("latest");
   const [searchValue, setSearchValue] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
 
@@ -59,12 +18,12 @@ function App() {
   useEffect(() => {
     let result = products;
     result = filterSearchTitle(result);
-    result = filterCategory(result)
+    result = filterCategory(result);
     result = dateSort(result);
     setFilteredProducts(result);
   }, [products, sort, searchValue, selectedCategory]);
 
-  const dateSort = (array) => {
+  const dateSort = (array: ProductsType) => {
     let sortedProducts = [...array];
     return sortedProducts.sort((a, b) => {
       if (sort === "latest") {
@@ -72,21 +31,20 @@ function App() {
       } else if (sort === "earliest") {
         return new Date(a.createdAt) > new Date(b.createdAt) ? 1 : -1;
       }
+      return 1;
     });
   };
 
-  const filterSearchTitle = (array) => {
-    return array.filter((p) => p.title.toLowerCase().includes(searchValue));
-  };
-  
-  const filterCategory = (array) => {
-    return array.filter((p) => p.category.includes(selectedCategory));
-  }
+  const filterSearchTitle = (array: ProductsType) =>
+    array.filter((p) => p.title.toLowerCase().includes(searchValue));
+
+  const filterCategory = (array: ProductsType) =>
+    array.filter((p) => p.category.includes(selectedCategory));
 
   // save data in localStorage
   useEffect(() => {
-    let savedProducts = JSON.parse(localStorage.getItem("products")) || [];
-    let savedCategories = JSON.parse(localStorage.getItem("categories")) || [];
+    let savedProducts = JSON.parse(localStorage.getItem("products")!) || [];
+    let savedCategories = JSON.parse(localStorage.getItem("categories")!) || [];
     setProducts(savedProducts);
     setCategories(savedCategories);
   }, []);

@@ -1,24 +1,37 @@
 import { useState } from "react";
+import { CategoriesType } from "../types";
 
-const Category = ({ setCategories }) => {
+type CategoryProps = {
+  setCategories: React.Dispatch<React.SetStateAction<CategoriesType>>;
+};
+
+const Category: React.FC<CategoryProps> = ({ setCategories }) => {
   const [isShowForm, setIsShowForm] = useState(false);
   const [categoryFormData, setCategoryFormData] = useState({
     title: "",
     description: "",
   });
 
-  const changeHandler = (e) => {
+  const changeHandler = <T extends HTMLInputElement | HTMLTextAreaElement>(
+    e: React.ChangeEvent<T>
+  ) => {
     setCategoryFormData({
       ...categoryFormData,
       [e.target.name]: e.target.value,
     });
   };
 
-  const addNewCategoryHandler = (e) => {
+  const addNewCategoryHandler = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
     e.preventDefault();
     setCategories((prevState) => [
       ...prevState,
-      { ...categoryFormData, createdAt: new Date().toISOString(), id: new Date().getTime() },
+      {
+        ...categoryFormData,
+        createdAt: new Date().toISOString(),
+        id: new Date().getTime(),
+      },
     ]);
     setCategoryFormData({
       title: "",
@@ -41,7 +54,7 @@ const Category = ({ setCategories }) => {
               title
             </label>
             <input
-              onChange={(e) => changeHandler(e)}
+              onChange={(e) => changeHandler<HTMLInputElement>(e)}
               value={categoryFormData.title}
               type="text"
               name="title"
@@ -57,10 +70,9 @@ const Category = ({ setCategories }) => {
               description
             </label>
             <textarea
-              onChange={(e) => changeHandler(e)}
+              onChange={(e) => changeHandler<HTMLTextAreaElement>(e)}
               value={categoryFormData.description}
-              rows="3"
-              type="text"
+              rows={3}
               name="description"
               id="category-description"
               className="bg-transparent rounded-xl border border-slate-500 text-slate-400 w-full"

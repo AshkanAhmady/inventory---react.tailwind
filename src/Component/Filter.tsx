@@ -1,4 +1,16 @@
-const Filter = ({
+import { CategoriesType } from "../types";
+
+type FilterProps = {
+  searchValue: string;
+  setSearchValue: React.Dispatch<React.SetStateAction<string>>;
+  sort: string;
+  setSort: React.Dispatch<React.SetStateAction<string>>;
+  selectedCategory: string;
+  setSelectedCategory: React.Dispatch<React.SetStateAction<string>>;
+  categories: CategoriesType;
+};
+
+const Filter: React.FC<FilterProps> = ({
   searchValue,
   setSearchValue,
   sort,
