@@ -1,17 +1,27 @@
 import { useState } from "react";
+import { CategoriesType, ProductsType } from "../types";
 
-const Product = ({ categories, setProducts }) => {
+type ProductProps = {
+  categories: CategoriesType;
+  setProducts: React.Dispatch<React.SetStateAction<ProductsType>>;
+};
+
+const Product: React.FC<ProductProps> = ({ categories, setProducts }) => {
   const [productFormData, setProductFormData] = useState({
     title: "",
     quantity: "",
     category: "",
   });
 
-  const changeHandler = (e) => {
+  const changeHandler = <T extends HTMLInputElement | HTMLSelectElement>(
+    e: React.ChangeEvent<T>
+  ) => {
     setProductFormData({ ...productFormData, [e.target.name]: e.target.value });
   };
 
-  const addNewProductHandler = (e) => {
+  const addNewProductHandler = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
     e.preventDefault();
 
     setProducts((prevState) => [
@@ -38,7 +48,7 @@ const Product = ({ categories, setProducts }) => {
             title
           </label>
           <input
-            onChange={(e) => changeHandler(e)}
+            onChange={(e) => changeHandler<HTMLInputElement>(e)}
             value={productFormData.title}
             type="text"
             name="title"
@@ -54,7 +64,7 @@ const Product = ({ categories, setProducts }) => {
             quantity
           </label>
           <input
-            onChange={(e) => changeHandler(e)}
+            onChange={(e) => changeHandler<HTMLInputElement>(e)}
             value={productFormData.quantity}
             type="number"
             name="quantity"
@@ -67,7 +77,7 @@ const Product = ({ categories, setProducts }) => {
             category
           </label>
           <select
-            onChange={(e) => changeHandler(e)}
+            onChange={(e) => changeHandler<HTMLSelectElement>(e)}
             value={productFormData.category}
             name="category"
             id="product-category"

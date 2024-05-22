@@ -1,5 +1,12 @@
-const ProductList = ({ products, setProducts }) => {
-  const deleteProductHandler = (productId) => {
+import { ProductsType } from "../types";
+
+type ProductListProps = {
+  products: ProductsType;
+  setProducts: React.Dispatch<React.SetStateAction<ProductsType>>;
+};
+
+const ProductList: React.FC<ProductListProps> = ({ products, setProducts }) => {
+  const deleteProductHandler = (productId: number) => {
     let updatedProducts = products.filter((item) => item.id !== productId);
     setProducts(updatedProducts);
   };
